@@ -7,9 +7,9 @@ from userge import userge, Message, Config
 from userge.utils import progress, take_screen_shot, runcmd
 
 @userge.on_cmd("(invert|mirror)$", about={
-    'header': "Invert or Mirror any media",
+    'header': "Invert or Mirror Flip any media",
     'usage': "{tr}invert [reply to any media]\n"
-             "{tr}mirror [reply to any media]"})
+             "{tr}mirror [reply to any media]"} name="transform")
 async def transform(message: Message):
     replied = message.reply_to_message
     if not replied:
@@ -79,9 +79,11 @@ async def transform_media(image_path, transform_choice):
     out.save(webp_file, "WebP")
     return webp_file
 
+"""Rotate any media"""
 @userge.on_cmd("rotate", about={
     'header': "Rotate any media",
-    'usage': "{tr}rotate [angle to rotate] [reply to media]"})
+    'usage': "{tr}rotate [angle to rotate] [reply to media]\n" 
+             "angle = 0 to 360(default is 90)"})
     
 async def rotate_(message: Message):
     replied = message.reply_to_message
@@ -107,7 +109,7 @@ async def rotate_(message: Message):
     if not os.path.isdir(Config.DOWN_PATH):
         os.makedirs(Config.DOWN_PATH)
    
-    await message.edit(f"<code>Rotating Media by {args}° C.W.!...</code>")
+    await message.edit(f"<code>Rotating Media by {args}°...</code>")
     c_time = time.time()
 
     dls = await message.client.download_media(
