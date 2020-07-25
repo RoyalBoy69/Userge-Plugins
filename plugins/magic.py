@@ -6,10 +6,11 @@ from PIL import Image, ImageOps
 from userge import userge, Message, Config
 from userge.utils import progress, take_screen_shot, runcmd
 
-@userge.on_cmd("(invert|mirror)$", about={
-    'header': "Invert or Mirror Flip any media",
+@userge.on_cmd("(invert|mirror|flip)$", about={
+    'header': "Invert, Mirror or Flip any media",
     'usage': "{tr}invert [reply to any media]\n"
-             "{tr}mirror [reply to any media]"} name="transform")
+             "{tr}mirror [reply to any media]\n"
+             "{tr}flip [reply to any media]"}, name="transform")
 async def transform(message: Message):
     replied = message.reply_to_message
     if not replied:
@@ -72,6 +73,8 @@ async def transform_media(image_path, transform_choice):
        im = im.convert('RGB')
     if transform_choice == "invert":
         out = ImageOps.invert(im)
+    if transform_choice == "flip":    
+        out = ImageOps.flip(im)
     else:
         out = im.transpose(Image.FLIP_LEFT_RIGHT)
     image_name = "invert.webp"
