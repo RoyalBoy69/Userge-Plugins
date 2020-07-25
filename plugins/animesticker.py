@@ -1,7 +1,5 @@
 """ Creates random anime sticker """
 
-# by @krishna_singhal
-
 import random
 import re
 from userge import userge, Message
@@ -28,17 +26,17 @@ def deEmojify(inputString: str) -> str:
     return re.sub(EMOJI_PATTERN, '', inputString)
 
 
-@userge.on_cmd("sticker", about={
+@userge.on_cmd("waifu", about={
     'header': "Creates random anime sticker",
     'flags': {
-        '-f': "To get only girls in anime",
-        '-ggl': "To get google search sticker",
+        '-r': "To get random sticker",
+        '-g': "To get google search sticker",
         '-mock': "get mock text in sticker"},
     'usage': "{tr}sticker [text | reply to message]\n"
              "{tr}sticker [flags] [text | reply to message]",
     'examples': [
-        "{tr}sticker Hello boys and girls",
-        "{tr}sticker [flags] Hello boys and girls"]}, allow_via_bot=False)
+        "{tr}sticker Oni-Chan",
+        "{tr}sticker [flags] Oni-Chan"]}, allow_via_bot=False)
 async def anime_sticker(message: Message):
     """ Creates random anime sticker! """
     replied = message.reply_to_message
@@ -51,7 +49,7 @@ async def anime_sticker(message: Message):
         await message.err("```Input not found!...```", del_in=3)
         return
     await message.delete()
-    if '-ggl' in message.flags:
+    if '-g' in message.flags:
         try:
             stickers = await userge.get_inline_bot_results(
                 "stickerizerbot",
@@ -66,14 +64,15 @@ async def anime_sticker(message: Message):
         else:
             await message.delete()
             return
-    if '-f' in message.flags:
-        k = [20, 32, 33, 40, 41, 42, 58]
+    if '-r' in message.flags:
+        k = [1, 3, 7, 9, 13, 22, 34, 35, 36, 37, 43, 44, 45, 52, 53, 55]
         animus = random.choice(k)
     elif '-mock' in message.flags:
         animus = 7
     else:
-        k = [1, 3, 7, 9, 13, 22, 34, 35, 36, 37, 43, 44, 45, 52, 53, 55]
+        k = [20, 32, 33, 40, 41, 42, 58]
         animus = random.choice(k)
+       
     try:
         stickers = await userge.get_inline_bot_results(
             "stickerizerbot",
