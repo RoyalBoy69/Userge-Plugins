@@ -8,5 +8,4 @@ justwatch
 lottie
 spotdl
 qrcode
-numpy
 colour
