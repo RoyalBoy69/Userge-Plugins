@@ -32,11 +32,11 @@ def deEmojify(inputString: str) -> str:
         '-r': "To get random sticker",
         '-g': "To get google search sticker",
         '-mock': "get mock text in sticker"},
-    'usage': "{tr}sticker [text | reply to message]\n"
-             "{tr}sticker [flags] [text | reply to message]",
+    'usage': "{tr}waifu [text | reply to message]\n"
+             "{tr}waifu [flags] [text | reply to message]",
     'examples': [
-        "{tr}sticker Oni-Chan",
-        "{tr}sticker [flags] Oni-Chan"]}, allow_via_bot=False)
+        "{tr}waifu Oni-Chan",
+        "{tr}waifu [flags] Oni-Chan"]}, allow_via_bot=False)
 async def anime_sticker(message: Message):
     """ Creates random anime sticker! """
     replied = message.reply_to_message

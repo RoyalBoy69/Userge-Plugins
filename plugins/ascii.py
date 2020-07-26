@@ -58,8 +58,16 @@ async def ascii_(message: Message):
             await message.err("<code>This sticker is BAKA, i won't ASCII it? ≧ω≦</code>")
             raise Exception(stdout + stderr)
         dls_loc = png_file
-        
-    elif replied.animation:
+
+    elif replied.sticker and replied.sticker.file_name.endswith(".webp"):
+        stkr_file = os.path.join(Config.DOWN_PATH, "stkr.png")
+        os.rename(dls_loc, stkr_file)
+        if not os.path.lexists(stkr_file):
+            await message.err("```Sticker not found...```")
+            return
+        dls_loc = stkr_file
+           
+    elif replied.animation or replied.video:
         await message.edit("<code>Look it's GF. Oh, no it's just a Gif</code>")
         jpg_file = os.path.join(Config.DOWN_PATH, "picture.jpg")
         await take_screen_shot(dls_loc, 0, jpg_file)
@@ -90,6 +98,8 @@ def asciiart(in_f, SC, GCF, color1, color2, bgcolor, ascii_type):
     letter_height = font.getsize("x")[1]
     WCF = letter_height / letter_width
     img = Image.open(in_f)
+    if not img.mode == 'RGB':
+       img = img.convert('RGB')
     if ascii_type == "alt":
         img = ImageOps.invert(img)
     widthByLetter = round(img.size[0] * SC * WCF)
