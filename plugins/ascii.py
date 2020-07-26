@@ -29,10 +29,12 @@ async def ascii_(message: Message):
         await message.edit("```Media not found...```")
         await message.reply_sticker('CAADAQADhgADwKwII4f61VT65CNGFgQ')
         return
+    if replied.video:
+       await message.edit("```Videos not supported, Reply to any Gif/Sticker/Image...```") 
     if '-alt' in message.flags:
         ascii_type = "alt"
     else:
-        ascii_type = "normal"
+        ascii_type = ""
     if not os.path.isdir(Config.DOWN_PATH):
         os.makedirs(Config.DOWN_PATH)
     await message.edit("<code>Converting Media!...</code>")
@@ -56,6 +58,7 @@ async def ascii_(message: Message):
             await message.err("<code>This sticker is BAKA, i won't ASCII it? ≧ω≦</code>")
             raise Exception(stdout + stderr)
         dls_loc = png_file
+        
     elif replied.animation:
         await message.edit("<code>Look it's GF. Oh, no it's just a Gif</code>")
         jpg_file = os.path.join(Config.DOWN_PATH, "picture.jpg")
@@ -65,6 +68,7 @@ async def ascii_(message: Message):
             await message.err("<code>This Gif is  (｡ì _ í｡), won't able to make an Ascii.</code>")
             return
         dls_loc = jpg_file
+        
     c_list = random_color()
     color1 = c_list[0]
     color2 = c_list[1]
@@ -76,6 +80,7 @@ async def ascii_(message: Message):
         reply_to_message_id=replied.message_id)
     await message.delete()
     os.remove(webp_file)
+    os.remove(dls_loc)
 
 
 def asciiart(in_f, SC, GCF, color1, color2, bgcolor, ascii_type):
