@@ -10,3 +10,4 @@ spotdl
 qrcode
 colour
 glitch_this
+validators
